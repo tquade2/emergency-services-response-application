@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "+v27/+ofVyBV+oPgg2WtrQbHr3j8lpLVGrfypoqHjA5zmLr0cMSjfuizA7kZIUxXpWtLKyvoDUPPN7HSMY5Tfw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Student\\source\\repos\\personal\\emergency-services-response-application\\EmergencyServicesResponseApplication\\EmergencyServicesResponseApplication.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Student\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.32\\microsoft.netcore.app.host.win-x64.3.1.32.nupkg.sha512"
+  ],
+  "logs": []
+}

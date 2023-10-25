@@ -31,7 +31,7 @@ The Emergency Services Response Application (ESRA) is a tool designed to streaml
 - Dispatcher selects and dispatches responders to respond.
 - Responders automatically navigate to the response location, then return to the base, and return patients to the hospital.
 
-### Data Structures
+### Data Structures - PLEASE REFERENCE create_esra_db.sql
 #### Database Schema/Data Models
 - Fire Stations (name, lat, long, address, num of responders)
 - Police Stations (name, lat, long, address, num of responders)
