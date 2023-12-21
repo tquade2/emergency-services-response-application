@@ -3,7 +3,7 @@ using EsraApi.Models;
 
 namespace EsraApi.DAO
 {
-    interface ICallerSqlDao
+    public interface ICallerSqlDao
     {
         IList<Caller> GetCallers();
         Caller GetCallerById(int id);

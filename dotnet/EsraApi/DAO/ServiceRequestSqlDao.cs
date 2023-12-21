@@ -17,7 +17,6 @@ namespace EsraApi.DAO
     {
       connectionString = dbConnectionString;
     }
-
     public IList<ServiceRequest> GetServiceRequests()
     {
       IList<ServiceRequest> serviceRequests = new List<ServiceRequest>();
@@ -76,36 +75,6 @@ namespace EsraApi.DAO
 
       return serviceRequest;
     }
-
-    public ServiceRequest GetServiceRequestByType(string type)
-    {
-      ServiceRequest serviceRequest = null;
-
-      string sql = "SELECT * FROM service_requests WHERE type = @type";
-
-      try
-      {
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-          conn.Open();
-
-          SqlCommand cmd = new SqlCommand(sql, conn);
-          cmd.Parameters.AddWithValue("@type", type);
-          SqlDataReader reader = cmd.ExecuteReader();
-
-          if (reader.Read())
-          {
-            serviceRequest = MapRowToServiceRequest(reader);
-          }
-        }
-      }
-      catch (SqlException ex)
-      {
-        throw new DaoException("SQL exception occurred", ex);
-      }
-
-      return serviceRequest;
-    }
     public ServiceRequest CreateServiceRequest(ServiceRequest serviceRequest)
     {
       string sql = "INSERT INTO service_requests (caller_id, type, date_time, street, city, state, zip, latitue, longitude, status, priority, description" + "VALUES (@caller_id, @type, @date_time, @street, @city, @state, @zip, @latitude, @longitude, @status, @priority, @description)";
@@ -130,7 +99,7 @@ namespace EsraApi.DAO
           cmd.Parameters.AddWithValue("@priority", serviceRequest.Priority);
           cmd.Parameters.AddWithValue("@description", serviceRequest.Description);
 
-          serviceRequest.ServiceRequestId = Convert.ToInt32(cmd.ExecuteScalar());
+          serviceRequest.Id = Convert.ToInt32(cmd.ExecuteScalar());
         }
       }
       catch (SqlException ex)
@@ -163,7 +132,7 @@ namespace EsraApi.DAO
           cmd.Parameters.AddWithValue("@status", serviceRequest.Status);
           cmd.Parameters.AddWithValue("@priority", serviceRequest.Priority);
           cmd.Parameters.AddWithValue("@description", serviceRequest.Description);
-          cmd.Parameters.AddWithValue("@service_request_id", serviceRequest.ServiceRequestId);
+          cmd.Parameters.AddWithValue("@service_request_id", serviceRequest.Id);
 
           cmd.ExecuteNonQuery();
         }
@@ -208,7 +177,7 @@ namespace EsraApi.DAO
     public ServiceRequest MapRowToServiceRequest(SqlDataReader reader)
     {
       ServiceRequest serviceRequest = new ServiceRequest();
-      serviceRequest.ServiceRequestId = Convert.ToInt32(reader["service_request_id"]);
+      serviceRequest.Id = Convert.ToInt32(reader["service_request_id"]);
       serviceRequest.CallerId = Convert.ToInt32(reader["caller_id"]);
       serviceRequest.Type = Convert.ToString(reader["type"]);
       serviceRequest.DateTime = Convert.ToDateTime(reader["date_time"]);

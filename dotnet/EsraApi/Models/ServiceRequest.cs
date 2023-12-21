@@ -5,7 +5,7 @@ namespace EsraApi.Models
 {
     public class ServiceRequest
     {
-        public int ServiceRequestId { get; set; }
+        public int Id { get; set; }
         public int CallerId { get; set; }
         public DateTime DateTime { get; set; }
         public string Street { get; set; }

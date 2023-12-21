@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using EsraApi.Models;
+using EsraApi.DAO;
 
 namespace EsraApi.Controllers
 {
@@ -27,18 +28,12 @@ namespace EsraApi.Controllers
       return Ok(serviceRequestDao.GetServiceRequestById(id));
     }
 
-    [HttpGet("byType/{type}")]
-    public ActionResult<List<ServiceRequest>> GetServiceRequestByType(string type)
-    {
-      return Ok(serviceRequestDao.GetServiceRequestByType(type));
-    }
-
     [HttpPost]
     public ActionResult<ServiceRequest> CreateServiceRequest(ServiceRequest serviceRequest)
     {
-      ServiceRequest serviceRequest = serviceRequestDao.CreateServiceRequest(serviceRequest);
+      ServiceRequest newServiceRequest = serviceRequestDao.CreateServiceRequest(serviceRequest);
 
-      if (serviceRequest.Id == 0)
+      if (newServiceRequest.Id == 0)
       {
         return BadRequest();
       }

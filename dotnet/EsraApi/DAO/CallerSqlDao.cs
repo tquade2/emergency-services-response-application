@@ -50,7 +50,7 @@ namespace EsraApi.DAO
 
         public Caller GetCallerById(int callerId)
         {
-            Caller caller;
+            Caller caller = null;
 
             string sql = "SELECT * FROM callers WHERE caller_id = @caller_id";
 
@@ -144,6 +144,47 @@ namespace EsraApi.DAO
 
             return newCaller;
         }
+
+        // TODO: update caller
+        public Caller UpdateCaller(Caller caller)
+        {
+            string sql = "UPDATE callers SET first_name = @first_name, last_name = @last_name, phone_number = @phone_number, street = @street, city = @city, state = @state, zip = @zip, latitude = @latitude, longitude = @longitude WHERE caller_id = @caller_id";
+            
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+
+                    cmd.Parameters.AddWithValue("@caller_id", caller.Id);
+                    cmd.Parameters.AddWithValue("@first_name", caller.FirstName);
+                    cmd.Parameters.AddWithValue("@last_name", caller.LastName);
+                    cmd.Parameters.AddWithValue("@phone_number", caller.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@street", caller.Street);
+                    cmd.Parameters.AddWithValue("@city", caller.City);
+                    cmd.Parameters.AddWithValue("@state", caller.State);
+                    cmd.Parameters.AddWithValue("@zip", caller.Zip);
+                    cmd.Parameters.AddWithValue("@latitude", caller.Latitude);
+                    cmd.Parameters.AddWithValue("@longitude", caller.Longitude);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        caller = GetCallerById(caller.Id);
+                    }
+                }   
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
+            }
+
+            return caller;
+        }
+
         public bool DeleteCaller(int callerId)
         {
             bool result = false;
@@ -179,7 +220,7 @@ namespace EsraApi.DAO
         private Caller MapRowToCaller(SqlDataReader reader)
         {
             Caller caller = new Caller();
-            caller.CallerId = Convert.ToInt32(reader["caller_id"]);
+            caller.Id = Convert.ToInt32(reader["caller_id"]);
             caller.FirstName = Convert.ToString(reader["first_name"]);
             caller.LastName = Convert.ToString(reader["last_name"]);
             caller.PhoneNumber = Convert.ToString(reader["phone_number"]);

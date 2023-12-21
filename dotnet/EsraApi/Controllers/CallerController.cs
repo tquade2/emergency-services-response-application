@@ -31,9 +31,9 @@ namespace EsraApi.Controllers
         }
 
         [HttpGet("byName/{name}")] // TODO: figure out how to full name to work with this
-        public ActionResult<Caller> GetCallerByName(string name)
+        public ActionResult<Caller> GetCallerByName(string firstName, string lastName)
         {
-            return Ok(callerDao.GetCallerByName(name));
+            return Ok(callerDao.GetCallerByName(firstName, lastName));
         }
 
         [HttpPost("createCaller")]
@@ -41,7 +41,7 @@ namespace EsraApi.Controllers
         {
             Caller newCaller = callerDao.CreateCaller(caller);
 
-            if (caller.CallerId == 0)
+            if (caller.Id == 0)
             {
                 return BadRequest();
             }
@@ -56,7 +56,7 @@ namespace EsraApi.Controllers
         {
             Caller newCaller = callerDao.UpdateCaller(updatedCaller);
 
-            if (newCaller.CallerId == 0)
+            if (newCaller.Id == 0)
             {
                 return BadRequest();
             }
