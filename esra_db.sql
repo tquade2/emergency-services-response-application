@@ -28,11 +28,11 @@ CREATE TABLE [callers] (
 	caller_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	first_name VARCHAR (50) NOT NULL,
 	last_name VARCHAR (50) NOT NULL,
-	phone_number INT NOT NULL,
+	phone VARCHAR (15) NOT NULL,
 	street VARCHAR(50) NOT NULL,
-  city VARCHAR(50) NOT NULL,
-  state VARCHAR(50) NOT NULL,
-  zip INT NOT NULL,
+	city VARCHAR(50) NOT NULL,
+	state VARCHAR(50) NOT NULL,
+	zip VARCHAR(9) NOT NULL,
 	latitude DECIMAL NOT NULL,
 	longitude DECIMAL NOT NULL,
 ) 
@@ -43,9 +43,9 @@ CREATE TABLE [service_requests] (
 	type VARCHAR(50) NOT NULL,
 	date_time DATETIME NOT NULL,
 	street VARCHAR(50) NOT NULL,
-   city VARCHAR(50) NOT NULL,
-   state VARCHAR(50) NOT NULL,
-   zip INT NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+	zip VARCHAR(9) NOT NULL,
 	latitude DECIMAL NOT NULL,
 	longitude DECIMAL NOT NULL,
 	status VARCHAR(50) NOT NULL,
@@ -58,9 +58,9 @@ CREATE TABLE [fire_stations] (
 	fire_station_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	name VARCHAR(100) NOT NULL,
 	street VARCHAR(50) NOT NULL,
-   city VARCHAR(50) NOT NULL,
-   state VARCHAR(50) NOT NULL,
-   zip INT NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+	zip VARCHAR(9) NOT NULL,
 	latitude DECIMAL NOT NULL,
 	longitude DECIMAL NOT NULL,
 	responder_count INT NOT NULL,
@@ -70,9 +70,9 @@ CREATE TABLE [police_stations] (
 	police_station_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	name VARCHAR(50) NOT NULL,
 	street VARCHAR(50) NOT NULL,
-   city VARCHAR(50) NOT NULL,
-   state VARCHAR(50) NOT NULL,
-   zip INT NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+	zip VARCHAR(9) NOT NULL,
 	latitude DECIMAL NOT NULL,
 	longitude DECIMAL NOT NULL,
 	responder_count INT NOT NULL,
@@ -83,9 +83,9 @@ CREATE TABLE [hospitals] (
 	hospital_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	name VARCHAR(50) NOT NULL,
 	street VARCHAR(50) NOT NULL,
-   city VARCHAR(50) NOT NULL,
-   state VARCHAR(50) NOT NULL,
-   zip INT NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+	zip VARCHAR(9) NOT NULL,
 	latitude DECIMAL NOT NULL,
 	longitude DECIMAL NOT NULL,
 	responder_count INT NOT NULL,
@@ -116,73 +116,24 @@ CREATE TABLE [paramedics] (
 	FOREIGN KEY (hospital_id) REFERENCES hospitals(hospital_id)
 )
 
-
 --inserts
 INSERT INTO users (username, password_hash, salt, user_role)
 VALUES
 	('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user'),
 	('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin');
 
-INSERT INTO [callers] (first_name, last_name, phone_number, email, address)
+INSERT INTO callers (first_name, last_name, phone, street, city, state, zip, latitude, longitude)
 VALUES
-    ('John', 'Doe', '555-123-4567', 'john.doe@example.com', '123 Main St'),
-    ('Jane', 'Smith', '555-987-6543', 'jane.smith@example.com', '456 Elm St'),
-    ('Alice', 'Johnson', '555-555-5555', 'alice.johnson@example.com', '789 Oak St'),
-    ('Bob', 'Williams', '555-111-2222', 'bob.williams@example.com', '101 Maple Ave'),
-    ('Eve', 'Brown', '555-222-3333', 'eve.brown@example.com', '222 Pine Rd');
+    ('John', 'Doe', 1234567890, '123 Main St', 'Anytown', 'CA', 12345, 34.0522, -118.2437),
+    ('Jane', 'Smith', 9876543210, '456 Elm St', 'Somewhere', 'NY', 54321, 40.7128, -74.0060),
+    ('Bob', 'Johnson', 5555555555, '789 Oak St', 'Nowhere', 'TX', 67890, 29.7604, -95.3698),
+    ('Mary', 'Davis', 1112223333, '101 Pine St', 'Smallville', 'WA', 98765, 47.6062, -122.3321),
+    ('David', 'Lee', 9998887777, '555 Cedar St', 'Metropolis', 'IL', 54321, 37.7749, -89.4194);
 
-INSERT INTO [emergency_service_requests] (date_time, address, latitude, longitude, type, status, priority, description)
+INSERT INTO service_requests (caller_id, type, date_time, street, city, state, zip, latitude, longitude, status, priority, description)
 VALUES
-    ('2023-10-25 08:30:00', '789 Oak St', 34.12345, -118.56789, 'Fire', 'Pending', 'High', 'House on fire'),
-    ('2023-10-25 09:15:00', '567 Pine St', 34.23456, -118.67890, 'Medical', 'Dispatched', 'Medium', 'Medical emergency'),
-    ('2023-10-25 10:00:00', '123 Elm St', 34.34567, -118.78901, 'Fire', 'Pending', 'High', 'Apartment fire'),
-    ('2023-10-25 11:30:00', '456 Oak St', 34.45678, -118.89012, 'Police', 'In Progress', 'Medium', 'Burglary reported'),
-    ('2023-10-25 12:45:00', '789 Maple St', 34.56789, -118.90123, 'Medical', 'Completed', 'Low', 'Minor injury');
-
-INSERT INTO [fire_stations] (name, address, latitude, longitude, responder_count)
-VALUES
-    ('Fire Station 1', '123 Firefighter Ave', 34.34567, -118.78901, 15),
-    ('Fire Station 2', '456 Fire Blvd', 34.45678, -118.89012, 12),
-    ('Fire Station 3', '789 Fire Lane', 34.56789, -118.90123, 10),
-    ('Fire Station 4', '101 Fire Rd', 34.67890, -118.01234, 18),
-    ('Fire Station 5', '222 Fire Street', 34.78901, -118.12345, 14);
-
-INSERT INTO [police_stations] (name, address, latitude, longitude, responder_count, inmate_capacity)
-VALUES
-    ('Police Station A', '789 Cop Lane', 34.56789, -118.90123, 20, 100),
-    ('Police Station B', '101 Law St', 34.67890, -118.01234, 15, 80),
-    ('Police Station C', '456 Safety Blvd', 34.34567, -118.78901, 22, 120),
-    ('Police Station D', '123 Justice St', 34.45678, -118.89012, 18, 90),
-    ('Police Station E', '555 Security Ave', 34.56789, -118.90123, 25, 110);
-
-INSERT INTO [hospitals] (name, address, latitude, longitude, responder_count, patient_capacity)
-VALUES
-    ('General Hospital', '123 Health St', 34.78901, -118.12345, 30, 200),
-    ('City Medical Center', '456 Care Ave', 34.89012, -118.23456, 25, 150),
-    ('Community Hospital', '789 Wellness Blvd', 34.56789, -118.90123, 35, 250),
-    ('Medical Center A', '101 Medical Rd', 34.67890, -118.01234, 28, 180),
-    ('Regional Hospital', '555 Healing Lane', 34.34567, -118.78901, 40, 300);
-
-INSERT INTO [fire_fighters] (fire_station_id, first_name, last_name)
-VALUES
-    (1, 'Alice', 'Anderson'),
-    (1, 'Bob', 'Baker'),
-    (2, 'Charlie', 'Clark'),
-    (2, 'David', 'Davis'),
-    (3, 'Eve', 'Evans');
-
-INSERT INTO [police_officers] (police_station_id, first_name, last_name)
-VALUES
-    (1, 'Frank', 'Foster'),
-    (2, 'Grace', 'Garcia'),
-    (3, 'Henry', 'Harris'),
-    (4, 'Ivy', 'Irwin'),
-    (5, 'Jack', 'Jackson');
-
-INSERT INTO [paramedics] (hospital_id, first_name, last_name)
-VALUES
-    (1, 'Lisa', 'Lewis'),
-    (2, 'Mike', 'Miller'),
-    (3, 'Nancy', 'Nelson'),
-    (4, 'Oliver', 'Owens'),
-    (5, 'Pam', 'Parker');
+    (1, 'Plumbing', '2023-12-21 10:00:00', '123 Main St', 'Anytown', 'CA', 12345, 34.0522, -118.2437, 'Open', 'High', 'Leaking faucet'),
+    (2, 'Electrical', '2023-12-22 14:30:00', '456 Elm St', 'Somewhere', 'NY', 54321, 40.7128, -74.0060, 'Open', 'Medium', 'Power outage'),
+    (3, 'HVAC', '2023-12-23 09:15:00', '789 Oak St', 'Nowhere', 'TX', 67890, 29.7604, -95.3698, 'Open', 'Low', 'Air conditioning not working'),
+    (4, 'Appliance Repair', '2023-12-24 16:45:00', '101 Pine St', 'Smallville', 'WA', 98765, 47.6062, -122.3321, 'Open', 'Medium', 'Broken refrigerator'),
+    (5, 'Plumbing', '2023-12-25 08:30:00', '555 Cedar St', 'Metropolis', 'IL', 54321, 37.7749, -89.4194, 'Open', 'High', 'Water leakage in basement');

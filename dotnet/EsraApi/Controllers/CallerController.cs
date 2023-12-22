@@ -11,50 +11,29 @@ namespace EsraApi.Controllers
     [ApiController]
     public class CallerController : ControllerBase
     {
-        private readonly ICallerSqlDao callerDao;
+        private readonly ICallerDao callerDao;
 
-        public CallerController(ICallerSqlDao callerDao)
+        public CallerController(ICallerDao callerDao)
         {
             this.callerDao = callerDao;
         }
 
-        [HttpGet()]
-        public ActionResult<List<Caller>> GetCallers()
+        [HttpGet]
+        public ActionResult<List<Caller>> Get()
         {
             return Ok(callerDao.GetCallers());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Caller> GetCallerById(int id)
+        public ActionResult<Caller> GetById(int id)
         {
             return Ok(callerDao.GetCallerById(id));
         }
 
-        [HttpGet("byName/{name}")] // TODO: figure out how to full name to work with this
-        public ActionResult<Caller> GetCallerByName(string firstName, string lastName)
-        {
-            return Ok(callerDao.GetCallerByName(firstName, lastName));
-        }
-
-        [HttpPost("createCaller")]
-        public IActionResult CreateCaller(Caller caller)
+        [HttpPost]
+        public ActionResult Post(Caller caller)
         {
             Caller newCaller = callerDao.CreateCaller(caller);
-
-            if (caller.Id == 0)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(caller);
-            }
-        }
-
-        [HttpPut("{id}")]
-        public ActionResult<Caller> UpdateCaller(Caller updatedCaller)
-        {
-            Caller newCaller = callerDao.UpdateCaller(updatedCaller);
 
             if (newCaller.Id == 0)
             {
@@ -65,8 +44,24 @@ namespace EsraApi.Controllers
                 return Ok(newCaller);
             }
         }
+
+        [HttpPut("{id}")]
+        public ActionResult<Caller> Put(int id, Caller caller)
+        {
+            Caller newCaller = callerDao.UpdateCaller(caller);
+
+            if (newCaller.Id == 0)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(newCaller);
+            }
+        }
+
         [HttpDelete("{id}")]
-        public ActionResult DeleteCaller(int id)
+        public ActionResult Delete(int id)
         {
             bool result = callerDao.DeleteCaller(id);
 

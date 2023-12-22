@@ -1,16 +1,16 @@
 import axios from 'axios';
 
-const http = axios.create({ baseURL: "https://localhost:44315" }); // Replace with your API base URL
+const http = axios.create({ baseURL: "https://localhost:44315" });
 
 export default {
   getCallers() {
-    return http.get('/callers');
+    return http.get('/caller');
   },
   getCaller(id) {
     return http.get(`/caller/${id}`);
   },
   byName(name) {
-    return http.get(`/caller/byName/${name}`);
+    return http.get(`/caller/${name}`);
   },
   createCaller(newCaller) {
     return http.post('/caller/createCaller', newCaller);

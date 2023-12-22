@@ -3,11 +3,10 @@ using EsraApi.Models;
 
 namespace EsraApi.DAO
 {
-    public interface ICallerSqlDao
+    public interface ICallerDao
     {
         IList<Caller> GetCallers();
         Caller GetCallerById(int id);
-        Caller GetCallerByName(string firstName, string lastName);
         Caller CreateCaller(Caller caller);
         Caller UpdateCaller(Caller caller);
         bool DeleteCaller(int id);

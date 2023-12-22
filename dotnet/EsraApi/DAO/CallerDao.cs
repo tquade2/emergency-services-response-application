@@ -9,11 +9,11 @@ using EsraApi.Security.Models;
 
 namespace EsraApi.DAO
 {
-    public class CallerSqlDao : ICallerSqlDao
+    public class CallerDao : ICallerDao
     {
         private readonly string connectionString;
 
-        public CallerSqlDao(string dbConnectionString)
+        public CallerDao(string dbConnectionString)
         {
             connectionString = dbConnectionString;
         }
@@ -107,13 +107,17 @@ namespace EsraApi.DAO
 
             return caller;
         }
+
         public Caller CreateCaller(Caller caller)
         {
             Caller newCaller = null;
 
-            string sql = "INSERT INTO callers (first_name, last_name, phone_number, street, city, state, zip, latitude, longitude" + "VALUES (@first_name, @last_name, @phone_number, @street, @city, @state, @zip, @latitude, @longitude)";
+            string sql = @"INSERT INTO callers (first_name,last_name, phone, street, city, state, zip, latitude, longitude)
+                         OUTPUT INSERTED.caller_id
+                         VALUES (@first_name, @last_name, @phone, @street, @city, @state, @zip, @latitude, @longitude)";
 
             int newCallerId = 0;
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -124,7 +128,7 @@ namespace EsraApi.DAO
 
                     cmd.Parameters.AddWithValue("@first_name", caller.FirstName);
                     cmd.Parameters.AddWithValue("@last_name", caller.LastName);
-                    cmd.Parameters.AddWithValue("@phone_number", caller.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@phone", caller.Phone);
                     cmd.Parameters.AddWithValue("@street", caller.Street);
                     cmd.Parameters.AddWithValue("@city", caller.City);
                     cmd.Parameters.AddWithValue("@state", caller.State);
@@ -145,11 +149,10 @@ namespace EsraApi.DAO
             return newCaller;
         }
 
-        // TODO: update caller
         public Caller UpdateCaller(Caller caller)
         {
-            string sql = "UPDATE callers SET first_name = @first_name, last_name = @last_name, phone_number = @phone_number, street = @street, city = @city, state = @state, zip = @zip, latitude = @latitude, longitude = @longitude WHERE caller_id = @caller_id";
-            
+            string sql = "UPDATE callers SET first_name = @first_name, last_name = @last_name, phone = @phone, street = @street, city = @city, state = @state, zip = @zip, latitude = @latitude, longitude = @longitude WHERE caller_id = @caller_id";
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -161,7 +164,7 @@ namespace EsraApi.DAO
                     cmd.Parameters.AddWithValue("@caller_id", caller.Id);
                     cmd.Parameters.AddWithValue("@first_name", caller.FirstName);
                     cmd.Parameters.AddWithValue("@last_name", caller.LastName);
-                    cmd.Parameters.AddWithValue("@phone_number", caller.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@phone", caller.Phone);
                     cmd.Parameters.AddWithValue("@street", caller.Street);
                     cmd.Parameters.AddWithValue("@city", caller.City);
                     cmd.Parameters.AddWithValue("@state", caller.State);
@@ -175,7 +178,7 @@ namespace EsraApi.DAO
                     {
                         caller = GetCallerById(caller.Id);
                     }
-                }   
+                }
             }
             catch (SqlException ex)
             {
@@ -220,16 +223,18 @@ namespace EsraApi.DAO
         private Caller MapRowToCaller(SqlDataReader reader)
         {
             Caller caller = new Caller();
+
             caller.Id = Convert.ToInt32(reader["caller_id"]);
             caller.FirstName = Convert.ToString(reader["first_name"]);
             caller.LastName = Convert.ToString(reader["last_name"]);
-            caller.PhoneNumber = Convert.ToString(reader["phone_number"]);
+            caller.Phone = Convert.ToString(reader["phone"]);
             caller.Street = Convert.ToString(reader["street"]);
             caller.City = Convert.ToString(reader["city"]);
             caller.State = Convert.ToString(reader["state"]);
             caller.Zip = Convert.ToString(reader["zip"]);
             caller.Latitude = Convert.ToDecimal(reader["latitude"]);
             caller.Longitude = Convert.ToDecimal(reader["longitude"]);
+
             return caller;
         }
     }

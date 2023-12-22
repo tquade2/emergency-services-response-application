@@ -62,7 +62,9 @@ namespace EsraApi
             // Dependency Injection configuration
             services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
             services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
-            services.AddTransient<IUserDao>(m => new UserSqlDao(connectionString));
+            services.AddTransient<IUserDao>(m => new UserDao(connectionString));
+            services.AddTransient<ICallerDao>(m => new CallerDao(connectionString));
+            services.AddTransient<IServiceRequestDao>(m => new ServiceRequestDao(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

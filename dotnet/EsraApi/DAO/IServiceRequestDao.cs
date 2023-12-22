@@ -3,9 +3,9 @@ using EsraApi.Models;
 
 namespace EsraApi.DAO
 {
-    public interface IServiceRequestSqlDao
+    public interface IServiceRequestDao
     {
-        IList<ServiceRequest> GetServiceRequests();
+        List<ServiceRequest> GetServiceRequests();
         ServiceRequest GetServiceRequestById(int id);
         ServiceRequest CreateServiceRequest(ServiceRequest serviceRequest);
         ServiceRequest UpdateServiceRequest(ServiceRequest seriviceRequest);

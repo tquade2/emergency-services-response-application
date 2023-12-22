@@ -2,18 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using Capstone.Exceptions;
-using Capstone.Models;
-using Capstone.Security;
-using Capstone.Security.Models;
+using EsraApi.Exceptions;
+using EsraApi.Models;
+using EsraApi.Security;
+using EsraApi.Security.Models;
 
-namespace Capstone.DAO
+namespace EsraApi.DAO
 {
-    public class UserSqlDao : IUserDao
+    public class UserDao : IUserDao
     {
         private readonly string connectionString;
 
-        public UserSqlDao(string dbConnectionString)
+        public UserDao(string dbConnectionString)
         {
             connectionString = dbConnectionString;
         }
@@ -64,7 +64,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read()) 
+                    if (reader.Read())
                     {
                         user = MapRowToUser(reader);
                     }
@@ -133,7 +133,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@user_role", role);
 
                     newUserId = Convert.ToInt32(cmd.ExecuteScalar());
-                    
+
                 }
                 newUser = GetUserById(newUserId);
             }
