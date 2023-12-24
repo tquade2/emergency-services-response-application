@@ -8,6 +8,7 @@
         type="text"
         id="firstName"
         name="firstName"
+        required autofocus 
       />
       <label for="lastName">Last Name</label>
       <input
@@ -97,7 +98,7 @@
         id="Longitude"
         name="Longitude"
       />
-      <button type="submit">Submit</button>
+      <button type="submit">Submit and Go to Service Request</button>
     </form>
     <div>
       <table>
@@ -167,7 +168,7 @@ export default {
         .postCaller(this.caller)
         .then(() => {
           this.caller = {};
-          this.$router.push({ name: "caller" });
+          this.$router.push({ name: "serviceRequest" });
           this.getAllCallers();
         })
         .catch((error) => {
