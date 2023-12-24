@@ -10,6 +10,8 @@ The first thing you'll need to do is to download any dependencies by running thi
 npm install
 ```
 
+You will also need to install Tailwind. Follow their instructions here: https://tailwindcss.com/docs/guides/vite#vue
+
 Next take a moment to review the `.env` file that's located in the root of the project. You can store environment variables that you want to use throughout your application in this file. When you open it, it'll look like this:
 
 ```

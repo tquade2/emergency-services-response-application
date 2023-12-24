@@ -132,8 +132,8 @@ VALUES
 
 INSERT INTO service_requests (caller_id, type, date_time, street, city, state, zip, latitude, longitude, status, priority, description)
 VALUES
-    (1, 'Plumbing', '2023-12-21 10:00:00', '123 Main St', 'Anytown', 'CA', 12345, 34.0522, -118.2437, 'Open', 'High', 'Leaking faucet'),
-    (2, 'Electrical', '2023-12-22 14:30:00', '456 Elm St', 'Somewhere', 'NY', 54321, 40.7128, -74.0060, 'Open', 'Medium', 'Power outage'),
-    (3, 'HVAC', '2023-12-23 09:15:00', '789 Oak St', 'Nowhere', 'TX', 67890, 29.7604, -95.3698, 'Open', 'Low', 'Air conditioning not working'),
-    (4, 'Appliance Repair', '2023-12-24 16:45:00', '101 Pine St', 'Smallville', 'WA', 98765, 47.6062, -122.3321, 'Open', 'Medium', 'Broken refrigerator'),
-    (5, 'Plumbing', '2023-12-25 08:30:00', '555 Cedar St', 'Metropolis', 'IL', 54321, 37.7749, -89.4194, 'Open', 'High', 'Water leakage in basement');
+    (1, 'Police', '2023-12-21 10:00:00', '123 Main St', 'Anytown', 'CA', 12345, 34.0522, -118.2437, 'Open', 'High', 'Noise Complaint, party north of residence.'),
+    (2, 'Fire', '2023-12-22 14:30:00', '456 Elm St', 'Somewhere', 'NY', 54321, 40.7128, -74.0060, 'Open', 'Medium', 'Cat stcuk in tree.'),
+    (3, 'Medical', '2023-12-23 09:15:00', '789 Oak St', 'Nowhere', 'TX', 67890, 29.7604, -95.3698, 'Open', 'Low', 'Middle-aged man collapsed after eating dinner.'),
+    (4, 'Police, Fire', '2023-12-24 16:45:00', '101 Pine St', 'Smallville', 'WA', 98765, 47.6062, -122.3321, 'Open', 'Medium', 'Suspected arsonists starting abandoned house fires.'),
+    (5, 'Fire, Medical', '2023-12-25 08:30:00', '555 Cedar St', 'Metropolis', 'IL', 54321, 37.7749, -89.4194, 'Open', 'High', 'Burning apartment building');

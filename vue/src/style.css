@@ -1,0 +1,21 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer components {
+  .button, button {
+    @apply bg-blue-500 p-2 m-2 font-bold;
+  }
+  input, select, textarea {
+    @apply border border-black p-2 m-2;
+  }
+  label {
+    @apply font-bold;
+  }
+  form {
+    @apply flex flex-col items-center justify-center
+  }
+  h1 {
+    @apply text-2xl font-bold m-5;
+  }
+}
